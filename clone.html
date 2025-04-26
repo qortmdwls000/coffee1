@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>정연주의 UI</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f7fa;
+    }
+
+    header {
+      background-color: #3f51b5;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 2rem;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .layout {
+      display: flex;
+      flex-direction: row; /* 왼쪽 탭 */
+      min-height: calc(100vh - 100px);
+    }
+
+    .tabs {
+      width: 160px;
+      background-color: #3f51b5;
+      display: flex;
+      flex-direction: column;
+      padding-top: 1rem;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    }
+
+    .tab {
+      padding: 0.7rem 1rem;
+      font-size: 0.95rem;
+      color: white;
+      cursor: pointer;
+      border-left: 5px solid transparent;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .tab:hover {
+      background-color: #5c6bc0;
+    }
+
+    .tab.active {
+      background-color: white;
+      color: #3f51b5;
+      font-weight: bold;
+      border-left: 5px solid #3f51b5;
+      box-shadow: inset -2px 0 6px rgba(63, 81, 181, 0.1);
+    }
+
+    .tab::before {
+      content: attr(data-icon);
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.1;
+      top: 10px;
+      right: 10px;
+      pointer-events: none;
+    }
+
+    .tab-title {
+      font-size: 0.95rem;
+      font-weight: bold;
+    }
+
+    .tab-subtitle {
+      font-size: 0.7rem;
+      color: #ccc;
+    }
+
+    .tab-content-area {
+      flex: 1;
+      background-color: white;
+      padding: 2rem 3rem;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+      animation: slideIn 0.5s ease;
+      overflow-x: hidden;
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @media (max-width: 768px) {
+      .layout {
+        flex-direction: column;
+      }
+
+      .tabs {
+        flex-direction: row;
+        width: 100%;
+        overflow-x: auto;
+        box-shadow: none;
+      }
+
+      .tab {
+        flex: 1;
+        text-align: center;
+        border-left: none;
+        border-bottom: 3px solid transparent;
+      }
+
+      .tab.active {
+        border-bottom: 3px solid #3f51b5;
+        background-color: white;
+        box-shadow: none;
+      }
+
+      .tab::before {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    📚 정연주의 html&css
+  </header>
+
+  <div class="layout">
+    <div class="tabs">
+      <div class="tab active" data-icon="📦" onclick="changeTab(event, 'panel1')">
+        <div class="tab-title">📦 Step. 1</div>
+        <div class="tab-subtitle">HTML</div>
+      </div>
+      <div class="tab" data-icon="📂" onclick="changeTab(event, 'panel2')">
+        <div class="tab-title">📂 Step. 2</div>
+        <div class="tab-subtitle">파일경로 설정</div>
+      </div>
+      <!-- <div class="tab" data-icon="🎨" onclick="changeTab(event, 'panel2')">
+        <div class="tab-title">🎨 Step 2</div>
+        <div class="tab-subtitle">파일경로 설정</div>
+      </div> -->
+      <div class="tab" data-icon="📱" onclick="changeTab(event, 'panel3')">
+        <div class="tab-title">📱 Step. 3 </div>
+        <div class="tab-subtitle">CSS 머지?</div>
+      </div>
+      <div class="tab" data-icon="💡" onclick="changeTab(event, 'panel4')">
+        <div class="tab-title">💡 Step. 4 </div>
+        <div class="tab-subtitle"> 웹사이트 분석 </div>
+      </div>
+      <div class="tab" data-icon="🔧" onclick="changeTab(event, 'panel5')">
+        <div class="tab-title">🔧 Step. 5</div>
+        <div class="tab-subtitle">CDN 머지?</div>
+      </div>
+      <div class="tab" data-icon="🧪" onclick="changeTab(event, 'panel6')">
+        <div class="tab-title">🧪 Step. 6</div>
+        <div class="tab-subtitle">실습</div>
+      </div>
+      <div class="tab" data-icon="🎨" onclick="changeTab(event, 'panel7')">
+        <div class="tab-title">🎨 ETC </div>
+        <div class="tab-subtitle">이모지 모음</div>
+      </div>
+    </div>
+
+    <div class="tab-content-area">
+      <div id="panel1" class="tab-panel active">
+        <h2>📦  Step. 1 : HTML 필수 태그와 속성(특징)</h2>
+      <div>
+          <ol>
+              <li>
+                <a href="/pages/structure/structure.html" target="_blank"> html의 구조 (html, head, body)</a>
+              </li>
+              <li>
+                <a href="/pages/indent/indent.html" target="_blank"> 들여쓰는게 무슨 의미일까? (부모-자식)</a>
+              </li>
+              <li>
+                <a href="/pages/example/tag.html" target="_blank"> 태그의 사용법 (태그는 반드시 닫는 태그(/)가 있어야 한다? No)</a>
+              </li>
+              <li>
+                <a href="/pages/link/link.html" target="_blank"> &lt;head&gt;에 들어가는 태그들 (meta, title, link ....)</a>
+              </li>
+              <li>
+                <a href="/pages/example/example.html" target="_blank">반드시 알아두어야 할 태그들</a>
+                  <ol>
+                    <li>
+                      &lt;h&gt;(반비례)
+                    </li>
+                    <li>
+                        &lt;div&gt;, &lt;span> (차이점)
+                    </li>
+                    <li>
+                        &lt;p>, &lt;br> (서로 차이점도 설명 및 p태그와 div태그와의 차이점 설명)
+                    </li>
+                    <li>
+                        &lt;a> (반드시 href 속성이 있어야 한다. 속성의 default는 "#")
+                    </li>
+                    <li>
+                        &lt;img /> (반드시 src 속성이 있어야 한다), (닫는 태그가 필요없다)
+                    </li>
+                    <li>
+                        &lt;input /> (type 속성별 차이점), (닫는 태그가 필요없다)
+                    </li> 
+                    <li>
+                        &lt;button>
+                    </li> 
+                    <li>
+                        &lt;table>, &lt;tr>, &lt;td>
+                    </li>
+                    <li>
+                        &lt;ol>, &lt;ul>, &lt;li>
+                    </li>  
+                </ol>
+              </li>
+          </ol>
+             
+        </div>
+      </div>
+      <div id="panel2" class="tab-panel">
+        <h2>📂 <a href="pages/project/project.html">Step. 2</a>: 파일의 경로설정</h2>
+        <div>
+          <ol>
+              <li>
+                "/" : 루트
+              </li>
+              <li>
+                "./" : 현재폴더
+              </li>
+              <li>
+                "../" : 현재폴더의 상단폴더
+              </li>
+
+              <ul>
+                <li>
+                  HTML과 CSS을 연결할 때, 파일의 위치가 중요
+
+                </li>
+                <li>
+                    경로만 제대로 잡아도 오류의 반은 줄일수 있답니다.
+                </li>
+              </ul>
+          </ol>
+          
+        </div>
+      </div>
+      <div id="panel3" class="tab-panel">
+        <h2>📱 Step. 3 : CSS 머지?</h2>
+        <ol>
+          <li>
+            <h2><a href="/pages/project/index.html" target="_blank">✅ CSS 적용 안될 경우?</a></h2>
+          </li>
+          <a href="/pages//project/index.html" target="_blank">✅ CSS 적용 안된 경우</a>
+          <a href="/pages/project1/index.html" target="_blank">✅ CSS 적용 된 경우</a>
+          <div class="box">
+            <strong>✔ HTML의 &lt;head&gt; 태그에서 CSS 파일이 연결되어 있는지 확인!</strong><br>
+            예: <code>&lt;link rel="stylesheet" href="style.css"&gt;</code>
+            
+          </div>
+          <li>
+          <h2><a href="/pages/css/example/example.html" target="_blank">✅ CSS 기본 문법</a></h2>
+          </li>
+          <pre>
+            div {
+              color: blue;
+            }
+          </pre>
+          <pre>
+            table {border-collapse: collapse;}
+
+            table,th,td {
+                border: 2px solid #333; /* 테두리 + 실선 */
+            }
+          </pre>
+          
+          <ul>
+            <li><code>{ }</code> 중괄호 안에 스타일 작성</li>
+            <li><code>;</code>는 각 속성 선언의 끝에 붙임</li>
+            <li>선택자 키와 값</li>
+          </ul>
+          <li>
+          <h2><a href="/pages/css/id-class/id-class.html" target="_blank">✅ CSS 적용 방법</a></h2>
+          </li>
+          <ul>
+            <li><strong>HTML 태그에 직접 적용:</strong> <code>&lt;div style="color:blue"&gt;</code></li>
+            <li><strong>ID 선택자 (#):</strong> <code>#myId { ... }</code></li>
+            <li><strong>Class 선택자 (.):</strong> <code>.myClass { ... }</code></li>
+          </ul>
+          <li>
+          <h2><a href="/pages/css/id-class/id-class.html" target="_blank">✅ ID vs CLASS 차이</a></h2>
+          </li>
+          <div class="box">
+            <ul>
+              <li><strong>ID:</strong> 문서 내에서 <u>한 번만</u> 사용</li>
+              <li><strong>CLASS:</strong> <u>여러 요소</u>에 반복 사용 가능</li>
+            </ul>
+          </div>
+          <li>
+          <h2>✅ 선택자 종류</h2>
+          </li>
+          <ul>
+            <li><strong>복합선택자</strong>: 여러 조건 조합</li>
+            <li><strong>일치선택자:</strong> <code>div.style { }</code></li>
+            <li><a href="/pages/css/select/select.html" target="_blank"><strong>자식선택자:</strong> </a><code>div > .style { }</code></li>
+            <li><a href="/pages/css/select/select1.html" target="_blank"><strong>후손선택자:</strong> </a> <code>div .style { }</code></li>
+            <li>스타일을 정교하게 지정하고 싶을때 선택자를 잘 선택해서 사용</li>
+          </ul>
+          <li>
+          <h2>✅ 자주 쓰이는 스타일 속성</h2>
+          </li>
+          <ul>
+            <!-- <li><a href="https://www.notion.so" target="_blank">Notion</a> 페이지로 이동</li> -->
+            <li><a href="/pages/hover/hover.html" target="_blank">color</a>: 글자 색</li>
+            <li><code>background-color</code>: 배경 색</li>
+            <li><code>border /border-radius</code>: 테두리 / 둥글게</li>
+            <li><code>solid</code>: 테두리 실선</li>
+            <li><code>width</code> / <code>height</code>: 너비 / 높이</li>
+            <li><a href="/pages/css/flex/index.html" target="_blank">display: flex</a>: 레이아웃 정렬</li>
+            <li><a href="/pages/css/justify-content/justify-content.html" target="_blank">justify-content</a>: 주축 정렬</li>
+            <li><a href="/pages/css/align-items/css-align-items.html" target="_blank"> align-items</a>: 교차축 정렬</li>
+            <li><a href="/pages/css/flex-direction/flex-direction.html" target="_blank">flex-direction</a>: 방향 설정</li>
+            <li><a href="/pages/css/font-family/font-family.html" target="_blank">font-family</a>: 글꼴 지정</li>
+            <li><a href="/pages/css/text-align/text-align.html" target="_blank">text-align</a>: 글자 정렬</li>
+            <li><a href="/pages/css/margin-padding/margin-padding.html" target="_blank">margin/padding</a>: 바깥 여백 / 안쪽 여백</li>
+            <li><a href="/pages/css/float/float-align.html" target="_blank">float</a>: 요소를 띄움</li>
+            <li><a href="/pages/css/text-decoration/text-decoration.html" target="_blank">text-decoration</a>: 밑줄, 취소선 등</li>
+          </ul>
+          <li>
+          <a href="/pages/hover/hover.html" target="_blank"><h2>✅ hover</h2></a>
+          </li>
+          <ul>
+            <li><code>:hover</code>: 마우스를 올렸을 때 효과</li>
+          </ul>
+          <li>
+          <a href="/pages/css/position/css-position.html" target="_blank"><h2>✅ position 속성</h2></a>
+          </li>
+          <ul>
+            <li><code>static</code>: 기본값 (기준 없음)</li>
+            <li><code>relative</code>: 자기 기준 위치 이동</li>
+            <li><code>absolute</code>: 가장 가까운 부모 기준</li>
+            <li><code>fixed</code>: 화면 기준 (스크롤에도 고정)</li>
+            <li><code>sticky</code>: 스크롤하다가 특정 위치에서 고정</li>
+          </ul>
+          <li>
+          <a href="/pages/css/단위/px.html" target="_blank"><h2>✅ 단위 종류</h2></a>
+          </li>
+          <ul>
+            <li><code>px</code>: 픽셀</li>
+            <li><code>in</code>: 인치</li>
+            <li><code>%</code>: 상대 비율</li>
+            <li><code>vh</code>: 화면 높이 기준 비율</li>
+          </ul>
+          <li>
+          <h2><a href="/pages/css/media/media.html" target="_blank">✅ 미디어쿼리 (반응형 웹)</a></h2>
+          </li>
+          <pre>
+            @media (max-width: 600px) {
+              body {
+                background-color: lightgray;
+              }
+            }
+          </pre>
+        </ol>
+          
+        <!-- <h2>📝 연습문제</h2>
+        <ol>
+          <li>아이디가 <code>myBox</code>인 div의 배경을 파란색으로 설정</li>
+          <li>클래스가 <code>highlight</code>인 요소의 텍스트를 빨간색으로</li>
+          <li>자식선택자와 후손선택자의 차이를 예시와 함께 설명</li>
+        </ol> -->
+     
+      </div>
+      <div id="panel4" class="tab-panel">
+        <h2>💡 Step. 4 : 웹사이트 분석 방법 (화면 설계)</h2>
+        <ul>
+          <li>웹사이트 화면(프론트엔드) 코딩에는 정답이 없음. (여러가지 태그 조합으로 어떻게든 만들면 됨)</li>
+          <li>클론코딩의 뜻과 클론코딩을 하기위한 (크롬)개발자도구 활용 방법(clone:복제하다)</li>
+          <li>인터넷에 있는 이미지를 내 웹사이트에 적용하는 방법</li>
+          <li>연습문제 : 자신이 원하는 웹사이트를 접속하여 개발자 도구를 이용하여 화면을 박스로 나누고 구조를 파악하기 (패드, ppt or 종이)</li>
+        </ul>
+        <iframe src="/pages/clone/clone-index.html" width="100%" height="500px" style="border:1px solid #ccc;"></iframe>
+       
+   
+      </div>
+      <div id="panel5" class="tab-panel">
+        <h2>🔧  Step. 5 : CDN(Content Delivery Network)</h2>
+        <ul>
+          <li>
+            CDN이란?
+          </li>
+          <li>
+            CDN 적용방법
+          </li>
+          <li>
+            부트스트랩이란?
+          </li>
+          <li>
+            내 웹사이트에 부트스트랩 적용하기(부트스트랩 사용 방법)
+          </li>
+        </ul>
+    
+          <iframe src="/pages/step5/step5-cdn-bootstrap.html" width="100%" height="500px" style="border:1px solid #ccc;"></iframe>
+ 
+      </div>
+      <div id="panel6" class="tab-panel">
+        <h2>🧪 Step. 6 : 실습</h2>
+        <ul>
+          <li>
+            실습 1. 구글 홈페이지 클론코딩 <br/>
+            <a href="https://www.google.com/" target="_blank">
+              https://www.google.com/
+            </a>
+
+          </li>
+          <li>
+            실습 2. 커피 구독 클론코딩 <br/>
+            <a href="https://project-nkr.pages.dev/" target="_blank">
+              https://project-nkr.pages.dev/
+            </a><br/>
+           
+          </li>
+          <li>실습 3 :
+            <a href="https://github.com/" target="_blank">git hub에 내 소스 코드 올리기기</a>
+          </li>
+          <li>실습 4 :
+            <a href="https://vercel.com/" target="_blank"> 내 소스 코드 배포(cloudflare, vercel, Netlify 등등) </a>
+          </li>
+          <li>
+            과제 1 : 패드, 종이, ppt(바이브 코딩) 등을 활용하여 자신이 원하는 웹페이지를 그려보고 그린것을 코딩해보기
+            <br/>
+            <a href="https://cafe.naver.com/f-e/cafes/31438070/menus/7" target="_blank">
+              프론트엔드>HTML&CSS>글쓰기
+          </a>과제1. 나만의 웹 페이지 만들기
+          </li>
+          <li>
+            과제 2 : 자신이 그리고 코딩한 웹페이지에 미디어쿼리를 적용하여 반응형 웹페이지 만들기
+            <br/>
+            <a href="https://cafe.naver.com/f-e/cafes/31438070/menus/7" target="_blank">
+              프론트엔드>HTML&CSS>글쓰기 
+              </a>과제 2. 웹페이지에 미디어쿼리 적용
+          </li>
+          <li>
+            커뮤니티 <br/>
+            <a href=" https://cafe.naver.com/ziaspeak" target="_blank">
+            https://cafe.naver.com/ziaspeak
+            </a>
+            <br/>
+            기타>Q&A>글쓰기
+          </li>
+        </ul>
+      </div>
+      <div id="panel7" class="tab-panel">
+        <h2>🎨 🖌️ 🧵 이모지 모음</h2> <a href="https://emojipedia.org/" target="_blank">🍫이모지 사이트 바로가기 </a>
+        <table border="1" cellspacing="0" cellpadding="8">
+          <thead>
+            <tr>
+              <th>의미</th>
+              <th>이모지</th>
+              <th>설명</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>📁 폴더</td>
+              <td>📁 🗂️ 📂</td>
+              <td>일반 폴더 / 분류 폴더 / 열린 폴더</td>
+            </tr>
+            <tr>
+              <td>📄 파일</td>
+              <td>📄 📝 🧾</td>
+              <td>문서 / 텍스트 파일 / 영수증 스타일 문서</td>
+            </tr>
+            <tr>
+              <td>🖼️ 이미지</td>
+              <td>🖼️ 🗺️ 📷</td>
+              <td>사진 / 지도 / 카메라</td>
+            </tr>
+            <tr>
+              <td>📦 압축/박스</td>
+              <td>📦 🧰 🛠️</td>
+              <td>박스 / 공구함 / 공구</td>
+            </tr>
+            <tr>
+              <td>⚙️ 설정/기능</td>
+              <td>⚙️ 🔧 🧪</td>
+              <td>톱니바퀴 / 수리 / 실험</td>
+            </tr>
+            <tr>
+              <td>🎨 디자인</td>
+              <td>🎨 🖌️ 🧵</td>
+              <td>팔레트 / 붓 / 실 (스타일 요소)</td>
+            </tr>
+            <tr>
+              <td>📱 모바일/디바이스</td>
+              <td>📱 💻 🖥️</td>
+              <td>스마트폰 / 노트북 / 데스크탑</td>
+            </tr>
+            <tr>
+              <td>💡 도움/힌트</td>
+              <td>💡 ❓ 💭</td>
+              <td>아이디어 / 질문 / 생각</td>
+            </tr>
+            <tr>
+              <td>✅ 체크리스트</td>
+              <td>✅ 🗒️ 📋</td>
+              <td>완료 표시 / 메모 / 체크리스트</td>
+            </tr>
+            <tr>
+              <td>🌐 웹/링크</td>
+              <td>🌐 🔗 📎</td>
+              <td>웹사이트 / 링크 연결 / 첨부파일</td>
+            </tr>
+          </tbody>
+        </table>
+        
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 정연주의 웹 페이지
+  </footer>
+
+  <script>
+    function changeTab(e, panelId) {
+      const tabs = document.querySelectorAll('.tab');
+      const panels = document.querySelectorAll('.tab-panel');
+
+      tabs.forEach(tab => tab.classList.remove('active'));
+      panels.forEach(panel => panel.classList.remove('active'));
+
+      e.currentTarget.classList.add('active');
+      document.getElementById(panelId).classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
